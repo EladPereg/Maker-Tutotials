@@ -1,0 +1,1432 @@
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f7ff">
+<title>Tinker Lab | לומדים Tinkercad</title>
+
+<style>
+:root {
+  --bg:#f7f7ff;
+  --surface:#ffffff;
+  --surface2:#f0efff;
+  --ink:#202044;
+  --muted:#727493;
+  --primary:#7055f7;
+  --primary2:#9a7cff;
+  --teal:#18cbb1;
+  --pink:#ff6eaa;
+  --orange:#ffad5b;
+  --blue:#57a9ff;
+  --line:#e8e6f8;
+  --shadow:0 12px 35px rgba(63,48,130,.09);
+  --shadow-hover:0 22px 50px rgba(63,48,130,.17);
+  --radius:25px;
+}
+
+*{box-sizing:border-box}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:25px;
+}
+
+body{
+  margin:0;
+  color:var(--ink);
+  font-family:Arial,"Segoe UI",sans-serif;
+  line-height:1.7;
+  overflow-x:hidden;
+  background:
+    radial-gradient(ellipse at 4% 20%,rgba(151,132,255,.13),transparent 31%),
+    radial-gradient(ellipse at 95% 54%,rgba(24,203,177,.10),transparent 27%),
+    radial-gradient(ellipse at 40% 90%,rgba(255,110,170,.07),transparent 30%),
+    var(--bg);
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  opacity:.27;
+  background-image:radial-gradient(#bcb6f5 .8px,transparent .8px);
+  background-size:24px 24px;
+}
+
+::selection{background:#d8d0ff;color:#302064}
+button,input{font:inherit}
+a{color:inherit}
+.container{width:min(1200px,92%);margin:auto}
+
+/* ===== Header ===== */
+
+header{
+  color:white;
+  overflow:hidden;
+  position:relative;
+  isolation:isolate;
+  background:
+    radial-gradient(ellipse at 75% 30%,rgba(133,108,255,.34),transparent 40%),
+    radial-gradient(ellipse at 12% 90%,rgba(24,203,177,.19),transparent 35%),
+    linear-gradient(125deg,#24204e 0%,#393078 48%,#5542a5 100%);
+  border-radius:0 0 44px 44px;
+  box-shadow:0 20px 55px rgba(58,43,130,.16);
+}
+
+header::before{
+  content:"";
+  position:absolute;
+  width:450px;
+  height:450px;
+  border-radius:50%;
+  background:#8b75ff;
+  filter:blur(120px);
+  opacity:.35;
+  top:-280px;
+  left:-100px;
+  pointer-events:none;
+  z-index:-1;
+  animation:ambient 10s ease-in-out infinite alternate;
+}
+
+header::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.12;
+  pointer-events:none;
+  z-index:-1;
+  background-image:
+    linear-gradient(rgba(255,255,255,.25) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.25) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(to bottom,black,transparent 95%);
+}
+
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:23px 0;
+  position:relative;
+  z-index:2;
+}
+
+.brand{display:flex;align-items:center;gap:13px}
+
+.brand-icon{
+  width:51px;
+  height:51px;
+  display:grid;
+  place-items:center;
+  border-radius:17px;
+  color:#25204f;
+  background:linear-gradient(135deg,#8bffe9,#51dfd0);
+  font-size:30px;
+  font-weight:900;
+  box-shadow:0 8px 25px rgba(24,203,177,.24),inset 0 1px 0 rgba(255,255,255,.7);
+  transition:transform .35s,box-shadow .35s;
+}
+
+.brand:hover .brand-icon{
+  transform:rotate(-10deg) scale(1.08);
+  box-shadow:0 10px 35px rgba(24,203,177,.42);
+}
+
+.brand-name{font-size:21px;font-weight:900;letter-spacing:1.5px}
+.brand-sub{color:#d2cff6;font-size:12px;letter-spacing:.3px}
+
+.nav-link{
+  color:#eeecff;
+  text-decoration:none;
+  margin-right:5px;
+  font-size:14px;
+  padding:10px 14px;
+  border-radius:13px;
+  transition:color .25s,background .25s,transform .25s;
+}
+
+.nav-link:hover{
+  color:#9dffeb;
+  background:rgba(255,255,255,.11);
+  transform:translateY(-2px);
+}
+
+/* ===== Hero ===== */
+
+.hero{
+  padding:72px 0 92px;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  align-items:center;
+  gap:38px;
+  position:relative;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 15px;
+  border:1px solid rgba(142,255,232,.38);
+  border-radius:99px;
+  color:#a5ffed;
+  background:rgba(82,245,210,.09);
+  font-size:13px;
+  margin-bottom:21px;
+  box-shadow:inset 0 0 20px rgba(82,245,210,.04);
+  animation:fadeUp .8s both;
+}
+
+h1{
+  font-size:clamp(40px,5.4vw,70px);
+  line-height:1.15;
+  letter-spacing:-1.8px;
+  margin:0 0 22px;
+  font-weight:900;
+  animation:fadeUp .8s .08s both;
+}
+
+.gradient{
+  background:linear-gradient(100deg,#8fffe5 5%,#c7b5ff 48%,#ffb4dc 95%);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  animation:gradientFlow 7s ease infinite;
+}
+
+.hero p{
+  color:#e0def8;
+  font-size:18px;
+  max-width:590px;
+  line-height:1.9;
+  animation:fadeUp .8s .16s both;
+}
+
+.hero-buttons{
+  display:flex;
+  gap:13px;
+  flex-wrap:wrap;
+  margin-top:30px;
+  animation:fadeUp .8s .24s both;
+}
+
+.btn{
+  border:1px solid transparent;
+  border-radius:15px;
+  padding:13px 19px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  text-decoration:none;
+  cursor:pointer;
+  font-weight:800;
+  transition:transform .25s,box-shadow .25s,background .25s,border-color .25s;
+  position:relative;
+  overflow:hidden;
+}
+
+.btn::after{
+  content:"";
+  position:absolute;
+  top:-80%;
+  left:-45%;
+  width:35%;
+  height:260%;
+  background:rgba(255,255,255,.3);
+  transform:rotate(25deg);
+  transition:left .5s;
+  pointer-events:none;
+}
+
+.btn:hover::after{left:125%}
+.btn:hover{transform:translateY(-3px)}
+.btn:active{transform:translateY(-1px) scale(.98)}
+
+.btn-primary{
+  background:linear-gradient(135deg,#8a73ff,#6549ec);
+  color:white;
+  box-shadow:0 8px 25px rgba(105,78,238,.28);
+}
+
+.btn-primary:hover{
+  background:linear-gradient(135deg,#9b88ff,#7259fa);
+  box-shadow:0 13px 32px rgba(105,78,238,.4);
+}
+
+.btn-light{
+  background:rgba(255,255,255,.09);
+  color:white;
+  border-color:rgba(255,255,255,.25);
+  backdrop-filter:blur(10px);
+}
+
+.btn-light:hover{
+  border-color:rgba(135,255,230,.7);
+  background:rgba(82,245,210,.12);
+}
+
+/* ===== Floating 3D cube ===== */
+
+.hero-art{
+  min-height:330px;
+  display:grid;
+  place-items:center;
+  position:relative;
+  animation:fadeIn 1.1s .2s both;
+}
+
+.cube-stage{
+  width:290px;
+  height:270px;
+  position:relative;
+  display:grid;
+  place-items:center;
+  transform:rotate(-8deg);
+  perspective:900px;
+}
+
+.cube{
+  width:158px;
+  height:158px;
+  border-radius:35px;
+  background:linear-gradient(140deg,#b9adff 0%,#856cff 45%,#5540ce 100%);
+  box-shadow:
+    15px 17px 0 #4732ae,
+    22px 30px 0 #33267e,
+    0 35px 85px rgba(101,87,245,.4),
+    inset 4px 4px 12px rgba(255,255,255,.4),
+    inset -7px -8px 18px rgba(30,17,107,.2);
+  display:grid;
+  place-items:center;
+  color:white;
+  font-size:79px;
+  animation:float 4.5s ease-in-out infinite;
+  position:relative;
+  z-index:2;
+  text-shadow:0 5px 20px rgba(255,255,255,.3);
+}
+
+.orbit{
+  position:absolute;
+  border:1px solid rgba(113,255,226,.72);
+  border-radius:50%;
+  width:290px;
+  height:115px;
+  transform:rotate(35deg);
+  box-shadow:0 0 18px rgba(82,245,210,.12);
+  animation:orbitPulse 5s ease-in-out infinite alternate;
+}
+
+.orbit.two{
+  border-color:rgba(205,184,255,.8);
+  transform:rotate(-35deg);
+  width:315px;
+  height:135px;
+  animation-delay:-2s;
+}
+
+.spark{
+  position:absolute;
+  color:#91ffeb;
+  font-size:30px;
+  filter:drop-shadow(0 0 9px rgba(82,245,210,.6));
+  animation:sparkle 2.8s ease-in-out infinite;
+}
+
+.spark.one{top:14px;right:25px}
+.spark.two{bottom:22px;left:12px;color:#d3c4ff;animation-delay:1.1s}
+
+/* ===== Main content ===== */
+
+main{padding:43px 0 80px}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:17px;
+}
+
+.stat,.tip{
+  background:rgba(255,255,255,.92);
+  border:1px solid var(--line);
+  border-radius:21px;
+  padding:21px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:transform .28s,border-color .28s,box-shadow .28s;
+}
+
+.stat::before,.tip::before{
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  left:0;
+  height:4px;
+  background:linear-gradient(90deg,#8c72ff,#23d8bb,#ff83ba);
+  opacity:.85;
+}
+
+.stat:hover,.tip:hover{
+  transform:translateY(-5px);
+  border-color:#d5ceff;
+  box-shadow:var(--shadow-hover);
+}
+
+.stat strong{
+  display:block;
+  font-size:20px;
+  margin-bottom:3px;
+  color:#30275d;
+}
+
+.stat span{color:var(--muted);font-size:13px}
+
+/* ===== Section headings ===== */
+
+.section-heading{margin:48px 0 22px}
+
+.section-heading h2{
+  font-size:clamp(27px,3vw,38px);
+  margin:0;
+  letter-spacing:-.5px;
+  color:#252148;
+}
+
+.section-heading h2::after{
+  content:"";
+  display:block;
+  width:67px;
+  height:5px;
+  border-radius:10px;
+  margin-top:12px;
+  background:linear-gradient(90deg,var(--teal),var(--primary),var(--pink));
+  box-shadow:0 4px 12px rgba(112,85,247,.15);
+}
+
+.section-heading p{color:var(--muted);margin:10px 0 0}
+
+/* ===== Search and filters ===== */
+
+.search-box{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:8px 18px;
+  background:rgba(255,255,255,.95);
+  border:1px solid #e4e0f7;
+  border-radius:18px;
+  box-shadow:0 7px 24px rgba(63,48,130,.05);
+  transition:border-color .25s,box-shadow .25s,transform .25s;
+}
+
+.search-box:focus-within{
+  border-color:#a99aff;
+  box-shadow:0 0 0 4px rgba(130,107,255,.1),0 10px 30px rgba(112,85,247,.1);
+  transform:translateY(-1px);
+}
+
+.search-box span{font-size:27px;color:var(--primary)}
+
+.search-box input{
+  border:0;
+  outline:0;
+  padding:13px 0;
+  width:100%;
+  background:transparent;
+  color:var(--ink);
+  font-size:15px;
+}
+
+.search-box input::placeholder{color:#a0a0bb}
+.search-box input::-webkit-search-cancel-button{cursor:pointer}
+
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin:17px 0 27px}
+
+.filter{
+  border:1px solid #e4e0f6;
+  background:rgba(255,255,255,.85);
+  padding:9px 17px;
+  border-radius:100px;
+  cursor:pointer;
+  color:#777492;
+  font-size:13px;
+  font-weight:700;
+  transition:all .22s;
+}
+
+.filter.active,.filter:hover{
+  background:linear-gradient(135deg,#eeeaff,#e4fbf7);
+  border-color:#c5b9ff;
+  color:#4d3cb4;
+  box-shadow:0 5px 16px rgba(112,85,247,.1);
+  transform:translateY(-2px);
+}
+
+.filter.active{
+  color:#3b3290;
+  border-color:#b9aaff;
+}
+
+/* ===== Lesson cards ===== */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:20px;
+}
+
+.card{
+  background:linear-gradient(150deg,#fff 0%,#fcfbff 100%);
+  border:1px solid #ebe8f8;
+  border-radius:24px;
+  padding:23px;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  box-shadow:0 8px 25px rgba(54,43,114,.055);
+  transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,border-color .3s;
+  animation:appear .45s ease both;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  top:-125px;
+  left:-100px;
+  background:var(--card-glow,rgba(130,107,255,.2));
+  border-radius:50%;
+  filter:blur(35px);
+  z-index:-1;
+  opacity:.55;
+  transition:opacity .3s,transform .4s;
+}
+
+.card::after{
+  content:"";
+  position:absolute;
+  top:0;
+  right:22px;
+  left:22px;
+  height:3px;
+  background:linear-gradient(90deg,transparent,var(--card-accent,#8b79ff),transparent);
+  opacity:.8;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:var(--shadow-hover);
+  border-color:#d9d0ff;
+}
+
+.card:hover::before{opacity:1;transform:scale(1.4)}
+
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  gap:10px;
+}
+
+.card-icon{
+  width:59px;
+  height:59px;
+  border-radius:19px;
+  display:grid;
+  place-items:center;
+  font-size:29px;
+  border:1px solid rgba(255,255,255,.8);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 5px 14px rgba(44,35,96,.06);
+  transition:transform .3s;
+}
+
+.card:hover .card-icon{transform:rotate(-7deg) scale(1.09)}
+
+.purple{
+  background:linear-gradient(145deg,#eee9ff,#dcd4ff);
+  --card-glow:rgba(139,119,255,.34);
+  --card-accent:#9076ff;
+}
+.mint{
+  background:linear-gradient(145deg,#d9fff5,#baf5e8);
+  --card-glow:rgba(82,245,210,.35);
+  --card-accent:#20cdb0;
+}
+.blue{
+  background:linear-gradient(145deg,#e0f1ff,#c6e5ff);
+  --card-glow:rgba(87,163,255,.35);
+  --card-accent:#54a9ff;
+}
+.orange{
+  background:linear-gradient(145deg,#fff0df,#ffdfba);
+  --card-glow:rgba(255,176,91,.36);
+  --card-accent:#ffab57;
+}
+.pink{
+  background:linear-gradient(145deg,#ffe4f0,#ffd1e5);
+  --card-glow:rgba(255,121,200,.32);
+  --card-accent:#ff77b5;
+}
+.yellow{
+  background:linear-gradient(145deg,#fff7d8,#ffecaa);
+  --card-glow:rgba(255,218,105,.38);
+  --card-accent:#f4c84f;
+}
+
+.tag{
+  font-size:11px;
+  padding:6px 10px;
+  background:#f5f3ff;
+  border:1px solid #e9e4ff;
+  color:#6d5db3;
+  border-radius:99px;
+  white-space:nowrap;
+}
+
+.card h3{
+  font-size:20px;
+  margin:19px 0 8px;
+  color:#29254c;
+  line-height:1.45;
+}
+
+.card p{
+  color:#77758f;
+  font-size:14px;
+  margin:0 0 21px;
+  flex:1;
+  line-height:1.8;
+}
+
+.card-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  padding-top:15px;
+  border-top:1px solid #eeebf7;
+}
+
+.level{color:#8b89a4;font-size:12px}
+
+.card .btn{
+  padding:10px 13px;
+  font-size:12px;
+  border-radius:12px;
+  white-space:nowrap;
+}
+
+.no-results{
+  display:none;
+  padding:38px;
+  text-align:center;
+  background:white;
+  border-radius:22px;
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  color:var(--muted);
+}
+
+.no-results h3{color:var(--ink)}
+
+/* ===== Project banner ===== */
+
+.project-banner{
+  margin-top:52px;
+  background:
+    radial-gradient(circle at 10% 20%,rgba(82,245,210,.22),transparent 35%),
+    linear-gradient(115deg,#30285f,#5541b2 58%,#8065ee);
+  border:1px solid rgba(157,140,255,.3);
+  border-radius:28px;
+  padding:35px;
+  color:white;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:25px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 18px 45px rgba(71,52,163,.17);
+}
+
+.project-banner::after{
+  content:"✦";
+  position:absolute;
+  font-size:180px;
+  line-height:1;
+  left:25px;
+  bottom:-72px;
+  color:rgba(255,255,255,.07);
+  pointer-events:none;
+}
+
+.project-banner h2{font-size:28px;margin:0 0 8px}
+.project-banner p{color:#e1dcff;margin:0}
+
+.project-banner .btn{
+  background:#fff;
+  color:#4935ad;
+  white-space:nowrap;
+  box-shadow:0 7px 25px rgba(0,0,0,.15);
+}
+
+.project-banner .btn:hover{background:#c7fff3;color:#102a35}
+
+/* ===== Tips ===== */
+
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+
+.tip .emoji{
+  font-size:29px;
+  display:inline-grid;
+  place-items:center;
+  width:49px;
+  height:49px;
+  border-radius:15px;
+  background:#f0edff;
+  border:1px solid #e6e0ff;
+}
+
+.tip h3{font-size:17px;margin:12px 0 6px;color:#302a5b}
+.tip p{color:var(--muted);font-size:13px;margin:0;line-height:1.8}
+
+/* ===== Calculator ===== */
+
+.diameter-guide-section{
+  margin-top:48px;
+  padding:35px;
+  background:
+    radial-gradient(ellipse at 100% 0%,rgba(130,107,255,.10),transparent 40%),
+    linear-gradient(145deg,#fff,#f7f5ff);
+  border-radius:28px;
+  border:1px solid #e3ddff;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.diameter-guide-section::before{
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  left:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--teal),var(--primary),var(--pink));
+}
+
+.diameter-guide-section h3{
+  color:#302752;
+  font-size:26px;
+  margin-top:0;
+  line-height:1.4;
+}
+
+.diameter-guide-section p{font-size:16px;color:#77758f;line-height:1.9}
+.diameter-guide-section strong{color:#6550c5}
+
+.calculator-box{
+  margin-top:25px;
+  padding:25px;
+  background:linear-gradient(135deg,#f7f5ff,#eefdfa);
+  border-radius:20px;
+  border:1px solid #e5e0fb;
+}
+
+.calc-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:25px;
+  align-items:center;
+}
+
+.calc-input-group label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:9px;
+  font-size:15px;
+  color:#393258;
+}
+
+.calc-input-group input{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd6f7;
+  border-radius:13px;
+  font-size:18px;
+  color:#302752;
+  background:white;
+  outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+
+.calc-input-group input:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 4px rgba(112,85,247,.1);
+}
+
+.calc-input-group input::-webkit-inner-spin-button{opacity:1}
+
+.calc-result-box{
+  background:linear-gradient(135deg,#ddfff5,#eee8ff);
+  padding:23px;
+  border-radius:17px;
+  border:1px solid #c9f0e7;
+  color:#3c3681;
+  font-weight:bold;
+  font-size:17px;
+  line-height:1.8;
+}
+
+/* ===== STL guide ===== */
+
+.stl-section{
+  margin-top:58px;
+  padding:35px;
+  border-radius:28px;
+  border:1px solid #e2dcff;
+  background:
+    radial-gradient(ellipse at 0% 0%,rgba(130,107,255,.09),transparent 40%),
+    linear-gradient(145deg,#fff,#f8f7ff);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.stl-section::before{
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  left:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--primary),var(--teal),var(--pink));
+}
+
+.stl-label{
+  display:inline-block;
+  background:#eee9ff;
+  color:#6950c8;
+  border:1px solid #ded5ff;
+  border-radius:100px;
+  padding:7px 14px;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.stl-section h2{
+  font-size:clamp(24px,3vw,32px);
+  margin:15px 0 9px;
+  color:#2e2854;
+  line-height:1.4;
+}
+
+.stl-section p.subtitle{color:#77758f;margin:0 0 30px;font-size:16px;line-height:1.9}
+
+.stl-list{display:flex;flex-direction:column;gap:25px}
+
+.stl-step{
+  background:linear-gradient(145deg,#fff,#fbfaff);
+  border:1px solid #e9e5f7;
+  border-radius:23px;
+  padding:26px;
+  box-shadow:0 7px 25px rgba(54,43,114,.055);
+  transition:border-color .25s,transform .25s,box-shadow .25s;
+}
+
+.stl-step:hover{
+  border-color:#cfc3ff;
+  transform:translateY(-3px);
+  box-shadow:var(--shadow-hover);
+}
+
+.stl-step h3{
+  font-size:20px;
+  margin:0 0 9px;
+  color:#302952;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.stl-step p{color:#77758f;font-size:15px;margin:0 0 19px;line-height:1.9}
+.stl-step strong{color:#6550c5}
+
+.stl-img-box{
+  width:100%;
+  height:420px;
+  border-radius:17px;
+  overflow:hidden;
+  border:1px solid #e5e1f3;
+  background:linear-gradient(135deg,#f4f3fa,#fff);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:10px;
+  box-shadow:inset 0 0 25px rgba(82,68,140,.04);
+}
+
+.stl-img-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  border-radius:9px;
+  transition:transform .35s;
+}
+
+.stl-img-box:hover img{transform:scale(1.025)}
+
+/* ===== Footer ===== */
+
+footer{
+  background:linear-gradient(120deg,#28224f,#3a3171);
+  color:#d2cfee;
+  padding:30px 0;
+  font-size:13px;
+  border-top:1px solid rgba(139,119,255,.2);
+  margin-top:15px;
+}
+
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+footer a{color:#8fffe5;text-decoration:none;transition:color .2s}
+footer a:hover{color:#fff}
+
+/* ===== Animations ===== */
+
+@keyframes float{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-15px) rotate(3deg)}
+}
+
+@keyframes appear{
+  from{opacity:0;transform:translateY(17px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(.94)}
+  to{opacity:1;transform:scale(1)}
+}
+
+@keyframes gradientFlow{
+  0%,100%{background-position:0% center}
+  50%{background-position:100% center}
+}
+
+@keyframes sparkle{
+  0%,100%{opacity:.65;transform:scale(.85) rotate(0deg)}
+  50%{opacity:1;transform:scale(1.2) rotate(15deg)}
+}
+
+@keyframes orbitPulse{
+  from{opacity:.55}
+  to{opacity:1}
+}
+
+@keyframes ambient{
+  from{transform:translate(0,0) scale(1)}
+  to{transform:translate(65px,40px) scale(1.15)}
+}
+
+/* ===== Responsive ===== */
+
+@media(max-width:850px){
+  .hero{grid-template-columns:1fr;padding:55px 0 70px;gap:15px}
+  .hero-art{min-height:270px}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .project-banner{align-items:start;flex-direction:column}
+  .project-banner .btn{white-space:normal}
+  .section-heading{margin-top:40px}
+}
+
+@media(max-width:560px){
+  .container{width:91%}
+  header{border-radius:0 0 28px 28px}
+  nav{padding:17px 0}
+  .brand-icon{width:43px;height:43px}
+  .brand-name{font-size:18px}
+  .brand-sub{font-size:11px}
+  .nav-link{display:none}
+
+  .hero{padding:43px 0 50px;gap:8px}
+  h1{font-size:clamp(38px,11vw,53px);letter-spacing:-1px}
+  .hero p{font-size:16px}
+  .hero-art{min-height:220px}
+  .cube-stage{transform:scale(.8) rotate(-8deg)}
+  .cube{width:130px;height:130px;font-size:62px}
+
+  main{padding:30px 0 55px}
+  .stats{gap:9px}
+  .stat{padding:14px 10px;border-radius:15px}
+  .stat strong{font-size:14px}
+  .stat span{font-size:11px;line-height:1.5}
+
+  .section-heading{margin:37px 0 20px}
+  .section-heading h2{font-size:27px}
+  .section-heading p{font-size:14px}
+
+  .search-box{padding:6px 13px}
+  .search-box input{font-size:14px}
+  .filters{gap:8px;margin:14px 0 21px}
+  .filter{padding:8px 12px;font-size:12px}
+
+  .cards,.tips{grid-template-columns:1fr}
+  .card{padding:20px;border-radius:20px}
+  .card h3{font-size:19px}
+  .card p{font-size:14px}
+  .card-footer{align-items:center}
+  .card .btn{font-size:12px}
+
+  .project-banner,.stl-section,.diameter-guide-section{padding:21px;border-radius:21px}
+  .project-banner h2{font-size:24px}
+  .diameter-guide-section h3{font-size:22px}
+  .diameter-guide-section p{font-size:14px}
+  .calculator-box{padding:17px}
+  .calc-grid{grid-template-columns:1fr;gap:18px}
+  .calc-result-box{padding:17px;font-size:15px}
+
+  .stl-section h2{font-size:24px}
+  .stl-section p.subtitle{font-size:14px}
+  .stl-step{padding:17px;border-radius:18px}
+  .stl-step h3{font-size:18px}
+  .stl-step p{font-size:14px}
+  .stl-img-box{height:280px;padding:7px}
+
+  .footer-inner{align-items:flex-start;flex-direction:column;gap:8px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <nav>
+      <div class="brand">
+        <div class="brand-icon">⬡</div>
+        <div>
+          <div class="brand-name">TINKER LAB</div>
+          <div class="brand-sub">מרכז ההדרכה לתלת־ממד</div>
+        </div>
+      </div>
+      <div>
+        <a class="nav-link" href="#lessons">הדרכות</a>
+        <a class="nav-link" href="#tips">טיפים ומידות</a>
+        <a class="nav-link" href="#stl">ייצוא לאפליקציה</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div>
+        <span class="eyebrow">✦ לומדים ליצור בדרך שלנו</span>
+        <h1>מדמיינים.<br><span class="gradient">מתכננים. מדפיסים.</span></h1>
+        <p>
+          כל מה שצריך לדעת על Tinkercad במקום אחד.
+          סרטונים, הסברים קצרים וטיפים שיעזרו לכם להפוך
+          רעיון למודל תלת־ממדי משלכם.
+        </p>
+        <div class="hero-buttons">
+          <a class="btn btn-primary" href="#lessons">▶ מתחילים ללמוד</a>
+          <a class="btn btn-light" href="https://www.tinkercad.com/" target="_blank" rel="noopener">פתיחת Tinkercad ↗</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="cube-stage">
+          <div class="orbit"></div>
+          <div class="orbit two"></div>
+          <div class="cube">⬡</div>
+          <span class="spark one">✦</span>
+          <span class="spark two">✧</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<main class="container">
+  <section class="stats">
+    <div class="stat"><strong>🧩 מהבסיס</strong><span>לומדים צעד אחר צעד</span></div>
+    <div class="stat"><strong>🎬 סרטוני הדרכה</strong><span>עברית ואנגלית</span></div>
+    <div class="stat"><strong>🚀 יוצרים בעצמנו</strong><span>לומדים דרך התנסות</span></div>
+  </section>
+
+  <section id="lessons">
+    <div class="section-heading">
+      <h2>מה רוצים ללמוד היום?</h2>
+      <p>חפשו פעולה או בחרו נושא כדי למצוא את ההדרכה המתאימה.</p>
+    </div>
+
+    <label class="search-box">
+      <span>⌕</span>
+      <input id="search" type="search" placeholder="לדוגמה: חור, ציר, טקסט..." aria-label="חיפוש הדרכות">
+    </label>
+
+    <div class="filters" id="filters">
+      <button class="filter active" data-category="all">הכול</button>
+      <button class="filter" data-category="basics">צעדים ראשונים</button>
+      <button class="filter" data-category="shapes">צורות ועריכה</button>
+      <button class="filter" data-category="precision">דיוק ומידות</button>
+      <button class="filter" data-category="projects">פרויקטים</button>
+    </div>
+
+    <div class="cards" id="cards"></div>
+    <div class="no-results" id="noResults">
+      <div style="font-size:34px">🔎</div>
+      <h3>לא מצאנו הדרכה מתאימה</h3>
+      <p>נסו לחפש מילה אחרת או לבחור נושא אחר.</p>
+    </div>
+  </section>
+
+  <section class="project-banner" id="projects">
+  </section>
+
+  <div class="diameter-guide-section">
+    <h3>🧮 מחשבון חיבור חלקים למודל (פיה וגוף)</h3>
+    <p>
+      בונים משרוקית שבה גוף המשרוקית מתחבר לפיה? ב-Tinkercad חייבים לחשב את ההבדל הנכון (מרווח/סובלנות) כדי שהחלקים יתחברו במציאות. הזינו למטה את קוטר החור בגוף, וגלו מה צריך להיות גודל הפיה שתיכנס לתוכו בול:
+    </p>
+
+    <div style="background:#eef2ff; border:1px solid #c7d2fe; padding:15px 20px; border-radius:12px; margin:15px 0; color:#312e81; font-size:14px;">
+      💡 <strong>זכרו באהבה:</strong> הכל פה זה ניסוי ודגמים ראשונים! לגמרי מותר לטעות, לנסות, ואם החלק יצא צמוד מדי או משוחרר מדי – מתקנים בקטנה בטינקרכאד ומנסים שוב. ככה בדיוק לומדים להיות מעצבים אמיתיים! ❤️
+    </div>
+
+    <div class="calculator-box">
+      <div class="calc-grid">
+        <div class="calc-input-group">
+          <label for="holeDiameter">קוטר החור החיצוני בגוף (במ"מ):</label>
+          <input type="number" id="holeDiameter" value="15" min="1">
+          <p style="font-size:12px; color:var(--muted); margin:6px 0 0;">לדוגמה: אם החור בגוף המעגלי הוא 15 מ"מ.</p>
+        </div>
+        <div class="calc-result-box" id="resultBox">
+          החלק הפנימי המומלץ (הפיה): 14.5 מ"מ<br>
+          <span style="font-size:12px; font-weight:normal; margin-top:4px; display:block;">(כולל מרווח ביטחון של 0.5 מ"מ לחיבור הדוק ומושלם!)</span>
+        </div>
+      </div>
+
+    <div class="stl-list">
+      <article class="stl-step">
+        <h3>תמונת עזר להמחשת הנושא בסביבת טינקרכאד </h3>
+<p>Diameter = קוטר.</p>
+        <div class="stl-img-box">
+          <img src="PIC5.png" alt="הדמיית קוטר במעגל">
+        </div>
+      </article>
+
+
+
+
+    </div>
+  </div>
+
+  <section class="stl-section" id="stl">
+    <span class="stl-label">שלב סופי להדפסה</span>
+    <h2>📦 ייצוא קובץ STL והעלאתו לאפליקציה</h2>
+    <p class="subtitle">סיימתם לעצב את המודל ב-Tinkercad? עקבו אחר השלבים הבאים לפי הסדר כדי להעביר את הקובץ לאפליקציה במחשב:</p>
+
+    <div class="stl-list">
+      <article class="stl-step">
+        <h3>1️⃣ איפה לוחצים לייצוא הקובץ?</h3>
+        <p>בפינה הימנית העליונה של מסך העיצוב ב-Tinkercad, לחצו על כפתור <strong>Export</strong> (ייצוא).</p>
+        <div class="stl-img-box">
+          <img src="PIC1.png" alt="איפה לוחצים לייצוא הקובץ">
+        </div>
+      </article>
+
+      <article class="stl-step">
+        <h3>2️⃣ בחירת פורמט הקובץ (.STL)</h3>
+        <p>בחלונית שנפתחה, תחת הקטגוריה <strong>For 3D Print</strong>, לחצו על האפשרות <strong>.STL</strong>.</p>
+        <div class="stl-img-box">
+          <img src="PIC2.png" alt="בחירת פורמט STL">
+        </div>
+      </article>
+
+      <article class="stl-step">
+        <h3>3️⃣ לאן הקובץ מגיע?</h3>
+        <p>הקובץ יורד אוטומטית ויופיע בסרגל ההורדות בדפדפן (תחת היסטוריית ההורדות האחרונה) עם סיומת <strong>.stl</strong>.</p>
+        <div class="stl-img-box">
+          <img src="PIC3.png" alt="לאן הקובץ מגיע">
+        </div>
+      </article>
+
+      <article class="stl-step">
+        <h3>4️⃣ גרירה לאפליקציית Maker Lab</h3>
+        <p>פתחו את האפליקציה <strong>maker lab</strong> (מצד ימין למטה / בשולחן העבודה) וגררו אליה את קובץ ה-STL שירד.</p>
+        <div class="stl-img-box">
+          <img src="PIC4.png" alt="גרירה לאפליקציית Maker Lab">
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div><strong style="color:white">TINKER LAB</strong> · לומדים, מתכננים ויוצרים</div>
+    <div><a href="https://www.tinkercad.com/" target="_blank" rel="noopener">Tinkercad הרשמי</a></div>
+  </div>
+</footer>
+
+<script>
+function calculateFit() {
+  const val = parseFloat(document.getElementById('holeDiameter').value) || 0;
+  const recommended = Math.max(0, val - 0.5).toFixed(1);
+  document.getElementById('resultBox').innerHTML = `החלק הפנימי המומלץ (הפיה): ${recommended} מ"מ<br><span style="font-size:12px; font-weight:normal; margin-top:4px; display:block;">(כולל מרווח ביטחון של 0.5 מ"מ לחיבור הדוק ומושלם!)</span>`;
+}
+
+document.getElementById('holeDiameter').addEventListener('input', calculateFit);
+
+const lessons = [
+  {
+    id:"start",
+    title:"היכרות עם סביבת העבודה",
+    description:"מכירים את הממשק, משטח העבודה והכלים הראשונים.",
+    category:"basics", categoryName:"צעדים ראשונים",
+    icon:"🧭", color:"blue", level:"מתחילים",
+    keywords:"התחלה משטח עבודה צורות",
+    url:"https://www.youtube.com/watch?v=LUrq-OZcAHI",
+    language:"עברית"
+  },
+  {
+    id:"move",
+    title:"הזזת צורות וסיבוב",
+    description:"לומדים להזיז אובייקט, לסובב אותו ולמקם אותו.",
+    category:"basics", categoryName:"צעדים ראשונים",
+    icon:"🔄", color:"mint", level:"מתחילים",
+    keywords:"הזזה סיבוב rotate move",
+    url:"https://www.tinkercadacademy.com/intro",
+    language:"אנגלית"
+  },
+  {
+    id:"size",
+    title:"שינוי מידות וגודל",
+    description:"שינוי אורך, רוחב וגובה של צורות.",
+    category:"precision", categoryName:"דיוק ומידות",
+    icon:"📐", color:"purple", level:"מתחילים",
+    keywords:"גודל מידות אורך רוחב גובה",
+    url:"https://www.tinkercadacademy.com/intro",
+    language:"אנגלית"
+  },
+  {
+    id:"hole",
+    title:"איך יוצרים חור?",
+    description:"הופכים צורה ל-Hole ומשתמשים ב-Group כדי לחתוך פתח.",
+    category:"shapes", categoryName:"צורות ועריכה",
+    icon:"⭕", color:"orange", level:"חשוב לדעת",
+    keywords:"חור holes hole group חיתוך",
+    url:"https://www.youtube.com/watch?v=YNjHMNXKayE",
+    language:"אנגלית"
+  },
+  {
+    id:"group",
+    title:"איחוד צורות — Group",
+    description:"מחברים כמה צורות לאובייקט אחד.",
+    category:"shapes", categoryName:"צורות ועריכה",
+    icon:"🧩", color:"purple", level:"מתחילים",
+    keywords:"איחוד חיבור group ungroup",
+    url:"https://www.youtube.com/watch?v=LUrq-OZcAHI",
+    language:"עברית"
+  },
+  {
+    id:"align",
+    title:"יישור מדויק — Align",
+    description:"ממקמים צורות במרכז או מיישרים אותן לפי הקצוות.",
+    category:"precision", categoryName:"דיוק ומידות",
+    icon:"🎯", color:"mint", level:"מתחילים",
+    keywords:"יישור align מרכז קצוות",
+    url:"https://www.youtube.com/watch?v=jc90JS4C60Q",
+    language:"אנגלית"
+  },
+  {
+    id:"duplicate",
+    title:"שכפול והעתקה",
+    description:"יוצרים עותקים של צורות וחוסכים זמן בעבודה.",
+    category:"shapes", categoryName:"צורות ועריכה",
+    icon:"📑", color:"blue", level:"מתחילים",
+    keywords:"שכפול duplicate copy ctrl d",
+    url:"https://www.youtube.com/watch?v=7ptpe-bA9F8",
+    language:"אנגלית"
+  },
+  {
+    id:"text",
+    title:"הוספת טקסט ושם",
+    description:"לומדים להוסיף שם וליצור מחזיק מפתחות אישי.",
+    category:"projects", categoryName:"פרויקטים",
+    icon:"🔤", color:"pink", level:"יצירה",
+    keywords:"טקסט שם אותיות חריטה text keychain",
+    url:"https://www.youtube.com/watch?v=Ac1TUmrZHu4",
+    language:"עברית"
+  },
+  {
+    id:"flip",
+    title:"היפוך צורה — Flip",
+    description:"משנים את הכיוון של אובייקט.",
+    category:"shapes", categoryName:"צורות ועריכה",
+    icon:"↔️", color:"orange", level:"מתחילים",
+    keywords:"היפוך flip mirror מראה",
+    url:"https://www.tinkercadacademy.com/intro",
+    language:"אנגלית"
+  },
+  {
+    id:"camera",
+    title:"שינוי זווית התצוגה",
+    description:"מסובבים את המבט ובודקים את המודל מכל הכיוונים.",
+    category:"basics", categoryName:"צעדים ראשונים",
+    icon:"👁️", color:"blue", level:"מתחילים",
+    keywords:"מצלמה זווית מבט camera view",
+    url:"https://www.tinkercadacademy.com/intro",
+    language:"אנגלית"
+  },
+  {
+    id:"workplane",
+    title:"משטח עבודה וסרגל",
+    description:"משתמשים ב-Workplane וב-Ruler למיקום ומדידה.",
+    category:"precision", categoryName:"דיוק ומידות",
+    icon:"📏", color:"mint", level:"דיוק",
+    keywords:"משטח עבודה workplane ruler סרגל",
+    url:"https://www.tinkercadacademy.com/intro",
+    language:"אנגלית"
+  },
+  {
+    id:"penholder",
+    title:"יצירת מעמד לעטים",
+    description:"מדריך בעברית ליצירת מוצר תלת־ממדי שימושי.",
+    category:"projects", categoryName:"פרויקטים",
+    icon:"✏️", color:"yellow", level:"פרויקט",
+    keywords:"מעמד לעטים עפרונות פרויקט",
+    url:"https://www.youtube.com/watch?v=AQgJYxPtswk",
+    language:"עברית"
+  },
+  {
+    id:"name-tag",
+    title:"יצירת תג שם",
+    description:"יוצרים תג אישי למזוודה או למוצר.",
+    category:"projects", categoryName:"פרויקטים",
+    icon:"🏷️", color:"pink", level:"פרויקט",
+    keywords:"תג שם מזוודה כלב keychain",
+    url:"https://www.youtube.com/watch?v=2F4qEfC-4FI",
+    language:"עברית"
+  },
+  {
+    id:"split",
+    title:"חלוקת מודל לשני חלקים",
+    description:"לומדים לחלק מודל לשני חלקים נפרדים.",
+    category:"projects", categoryName:"פרויקטים",
+    icon:"📦", color:"purple", level:"מתקדמים",
+    keywords:"שני חלקים split stl חלקים",
+    url:"https://www.youtube.com/watch?v=mdgQjFpKLog",
+    language:"עברית"
+  },
+  {
+    id:"hinge",
+    title:"ציר למכסה של קופסה",
+    description:"מדריך לבניית קופסה עם מכסה שנפתח ונסגר באמצעות ציר.",
+    category:"projects", categoryName:"פרויקטים",
+    icon:"🔩", color:"orange", level:"מתקדמים",
+    keywords:"ציר hinge מכסה קופסה פתיחה סגירה",
+    url:"https://www.youtube.com/watch?v=cisdY-8hQPI",
+    language:"אנגלית"
+  },
+
+];
+
+const cards = document.getElementById("cards");
+const search = document.getElementById("search");
+const noResults = document.getElementById("noResults");
+const filters = document.getElementById("filters");
+let activeCategory = "all";
+
+function renderLessons() {
+  const query = search.value.trim().toLowerCase();
+
+  const filtered = lessons.filter(lesson => {
+    const matchesCategory =
+      activeCategory === "all" || lesson.category === activeCategory;
+
+    const searchable = (
+      lesson.title + " " +
+      lesson.description + " " +
+      lesson.categoryName + " " +
+      lesson.keywords + " " +
+      lesson.language
+    ).toLowerCase();
+
+    return matchesCategory && searchable.includes(query);
+  });
+
+  cards.innerHTML = filtered.map(lesson => `
+    <article class="card">
+      <div class="card-top">
+        <div class="card-icon ${lesson.color}">${lesson.icon}</div>
+        <span class="tag">${lesson.categoryName}</span>
+      </div>
+      <h3>${lesson.title}</h3>
+      <p>${lesson.description}</p>
+      <div class="card-footer">
+        <span class="level">${lesson.language} · ${lesson.level}</span>
+        <a class="btn btn-primary"
+            href="${lesson.url}"
+            target="_blank"
+            rel="noopener noreferrer">
+          ▶ צפה ב-YouTube
+        </a>
+      </div>
+    </article>
+  `).join("");
+
+  noResults.style.display = filtered.length ? "none" : "block";
+}
+
+search.addEventListener("input", renderLessons);
+
+filters.querySelectorAll(".filter").forEach(button => {
+  button.addEventListener("click", () => {
+    filters.querySelectorAll(".filter").forEach(item =>
+      item.classList.remove("active")
+    );
+    button.classList.add("active");
+    activeCategory = button.dataset.category;
+    renderLessons();
+  });
+});
+
+renderLessons();
+</script>
+</body>
+</html>
